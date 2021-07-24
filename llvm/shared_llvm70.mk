@@ -22,24 +22,6 @@ llvm70_arm_static_libraries := \
   libLLVM70ARMDisassembler \
   libLLVM70ARMUtils
 
-llvm70_x86_static_libraries := \
-  libLLVM70X86CodeGen \
-  libLLVM70X86Info \
-  libLLVM70X86Desc \
-  libLLVM70X86AsmParser \
-  libLLVM70X86AsmPrinter \
-  libLLVM70X86Utils \
-  libLLVM70X86Disassembler
-
-llvm70_amdgpu_static_libraries := \
-  libLLVM70AMDGPUCodeGen \
-  libLLVM70AMDGPUInfo \
-  libLLVM70AMDGPUDesc \
-  libLLVM70AMDGPUAsmParser \
-  libLLVM70AMDGPUDisassembler \
-  libLLVM70AMDGPUAsmPrinter \
-  libLLVM70AMDGPUUtils
-
 llvm70_aarch64_static_libraries := \
   libLLVM70AArch64CodeGen \
   libLLVM70AArch64Info \
@@ -94,7 +76,6 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_WHOLE_STATIC_LIBRARIES := \
   $(llvm70_pre_static_libraries) \
   $(llvm70_arm_static_libraries) \
-  $(llvm70_x86_static_libraries) \
   $(llvm70_aarch64_static_libraries) \
   $(llvm70_post_static_libraries)
 
@@ -125,12 +106,9 @@ LOCAL_MODULE_TAGS := optional
 
 # Device build selectively pulls in ARM, X86 components.
 LOCAL_WHOLE_STATIC_LIBRARIES := \
-  $(llvm70_pre_static_libraries) \
-  $(llvm70_amdgpu_static_libraries)
+  $(llvm70_pre_static_libraries)
 
 LOCAL_WHOLE_STATIC_LIBRARIES_arm += $(llvm70_arm_static_libraries)
-LOCAL_WHOLE_STATIC_LIBRARIES_x86 += $(llvm70_x86_static_libraries)
-LOCAL_WHOLE_STATIC_LIBRARIES_x86_64 += $(llvm70_x86_static_libraries)
 LOCAL_WHOLE_STATIC_LIBRARIES_arm64 += $(llvm70_aarch64_static_libraries)
 LOCAL_WHOLE_STATIC_LIBRARIES_arm64 += $(llvm70_arm_static_libraries)
 

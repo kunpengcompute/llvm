@@ -111,29 +111,6 @@ subdirs += \
   lib/Target/AArch64/TargetInfo \
   lib/Target/AArch64/Utils
 
-# MIPS Code Generation Libraries
-# ignore MIPS
-
-# X86 Code Generation Libraries
-subdirs += \
-  lib/Target/X86 \
-  lib/Target/X86/AsmParser \
-  lib/Target/X86/InstPrinter \
-  lib/Target/X86/Disassembler \
-  lib/Target/X86/MCTargetDesc \
-  lib/Target/X86/TargetInfo \
-  lib/Target/X86/Utils
-
-# AMDGPU Code Generation Libraries
-subdirs += \
-  lib/Target/AMDGPU \
-  lib/Target/AMDGPU/AsmParser \
-  lib/Target/AMDGPU/Disassembler \
-  lib/Target/AMDGPU/InstPrinter \
-  lib/Target/AMDGPU/MCTargetDesc \
-  lib/Target/AMDGPU/TargetInfo \
-  lib/Target/AMDGPU/Utils
-
 # LLVM70 Command Line Utilities
 subdirs += \
   utils/TableGen
