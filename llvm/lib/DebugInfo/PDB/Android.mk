@@ -88,7 +88,11 @@ debuginfo_pdb_SRC_FILES :=      \
 # =====================================================
 include $(CLEAR_VARS)
 
-REQUIRES_RTTI := 1
+ifeq ($(LLVM_ANDROID_MAJOR_VERSION), 7)
+    REQUIRES_RTTI := 1
+else
+    REQUIRES_RTTI := 0
+endif
 
 LOCAL_SRC_FILES := $(debuginfo_pdb_SRC_FILES)
 
@@ -105,7 +109,11 @@ include $(BUILD_HOST_STATIC_LIBRARY)
 ifneq (true,$(DISABLE_LLVM70_DEVICE_BUILDS))
 include $(CLEAR_VARS)
 
-REQUIRES_RTTI := 1
+ifeq ($(LLVM_ANDROID_MAJOR_VERSION), 7)
+    REQUIRES_RTTI := 1
+else
+    REQUIRES_RTTI := 0
+endif
 
 LOCAL_SRC_FILES := $(debuginfo_pdb_SRC_FILES)
 

@@ -1,7 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 LLVM70_ROOT_PATH := $(LOCAL_PATH)
-include $(LLVM70_ROOT_PATH)/definitions.mk
-
+LLVM_ANDROID_MAJOR_VERSION := $(word 1, $(subst ., , $(PLATFORM_VERSION)))
+ifeq ($(LLVM_ANDROID_MAJOR_VERSION), 7)
+    include $(LLVM70_ROOT_PATH)/definitions.mk
+endif
 
 define _add-clean-step
   $(if $(strip $(INTERNAL_CLEAN_BUILD_VERSION)),, \

@@ -10,8 +10,13 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := $(x86_utils_SRC_FILES)
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
-  $(call generated-sources-dir-for,STATIC_LIBRARIES,libLLVM70X86CodeGen,,)
+ifeq ($(LLVM_ANDROID_MAJOR_VERSION), 7)
+    LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
+        $(call generated-sources-dir-for,STATIC_LIBRARIES,libLLVM70X86CodeGen,,)
+else
+    LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
+        $(call generated-sources-dir-for,STATIC_LIBRARIES,libLLVM70X86CodeGen,true,)
+endif
 LOCAL_STATIC_LIBRARIES += libLLVM70X86CodeGen
 LOCAL_MODULE:= libLLVM70X86Utils
 

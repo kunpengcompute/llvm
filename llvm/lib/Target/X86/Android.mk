@@ -59,8 +59,14 @@ x86_codegen_SRC_FILES :=            \
   X86TargetTransformInfo.cpp        \
   X86VZeroUpper.cpp                 \
   X86WinAllocaExpander.cpp          \
-  X86WinEHState.cpp
+  X86WinEHState.cpp                 
 
+ifeq ($(LLVM_ANDROID_MAJOR_VERSION), 9)
+    x86_codegen_SRC_FILES +=        \
+        X86DiscriminateMemOps.cpp   \
+        X86CondBrFolding.cpp        \
+        X86InsertPrefetch.cpp             
+endif
 # For the host
 # =====================================================
 include $(CLEAR_VARS)

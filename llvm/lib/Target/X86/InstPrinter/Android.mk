@@ -10,7 +10,11 @@ x86_instprinter_TBLGEN_TABLES := \
 x86_instprinter_SRC_FILES := \
   X86ATTInstPrinter.cpp      \
   X86IntelInstPrinter.cpp    \
-  X86InstComments.cpp
+  X86InstComments.cpp       
+
+ifeq ($(LLVM_ANDROID_MAJOR_VERSION), 9)
+    x86_instprinter_SRC_FILES += X86InstPrinterCommon.cpp
+endif
 
 # For the device
 # =====================================================

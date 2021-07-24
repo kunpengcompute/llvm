@@ -11,6 +11,8 @@
 
 using namespace llvm::codeview;
 
+DebugSubsectionRef::DebugSubsectionRef(DebugSubsectionKind Kind) : Kind(Kind) {}
 DebugSubsectionRef::~DebugSubsectionRef() {}
 
+DebugSubsection::DebugSubsection(DebugSubsectionKind Kind) : Kind(Kind) {}
 DebugSubsection::~DebugSubsection() {}
