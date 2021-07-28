@@ -19,7 +19,7 @@ namespace codeview {
 
 class DebugSubsectionRef {
 public:
-  explicit DebugSubsectionRef(DebugSubsectionKind Kind) : Kind(Kind) {}
+  explicit DebugSubsectionRef(DebugSubsectionKind Kind);
   virtual ~DebugSubsectionRef();
 
   static bool classof(const DebugSubsectionRef *S) { return true; }
@@ -32,7 +32,7 @@ protected:
 
 class DebugSubsection {
 public:
-  explicit DebugSubsection(DebugSubsectionKind Kind) : Kind(Kind) {}
+  explicit DebugSubsection(DebugSubsectionKind Kind);
   virtual ~DebugSubsection();
 
   static bool classof(const DebugSubsection *S) { return true; }
