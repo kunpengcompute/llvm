@@ -249,7 +249,7 @@ int main(int argc, char **argv) {
   cl::ParseCommandLineOptions(argc, argv);
 
   llvm_shutdown_obj Y;
-
+  fprintf(stderr,"QQQQQQQQQQQQQQQQQQQQQ");
   return TableGenMain(argv[0], &LLVMTableGenMain);
 }
 
