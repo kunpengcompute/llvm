@@ -54,7 +54,7 @@ struct Config {
   bool DisableVerify = false;
 
   /// Use the new pass manager
-  bool UseNewPM = LLVM_ENABLE_NEW_PASS_MANAGER;
+  bool UseNewPM = false;
 
   /// Flag to indicate that the optimizer should not assume builtins are present
   /// on the target.

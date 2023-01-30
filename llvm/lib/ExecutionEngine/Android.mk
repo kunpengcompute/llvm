@@ -1,0 +1,33 @@
+LOCAL_PATH:= $(call my-dir)
+
+executionengine_SRC_FILES := \
+	ExecutionEngineBindings.cpp \
+	ExecutionEngine.cpp \
+	GDBRegistrationListener.cpp \
+	SectionMemoryManager.cpp \
+	TargetSelect.cpp
+
+# For the host
+# =====================================================
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := libLLVM70ExecutionEngine
+LOCAL_MODULE_HOST_OS := linux
+LOCAL_SRC_FILES := $(executionengine_SRC_FILES)
+
+include $(LLVM70_HOST_BUILD_MK)
+include $(LLVM70_GEN_ATTRIBUTES_MK)
+include $(BUILD_HOST_STATIC_LIBRARY)
+
+# For the device
+# =====================================================
+ifneq (true,$(DISABLE_LLVM70_DEVICE_BUILDS))
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := libLLVM70ExecutionEngine
+LOCAL_SRC_FILES := $(executionengine_SRC_FILES)
+
+include $(LLVM70_DEVICE_BUILD_MK)
+include $(LLVM70_GEN_ATTRIBUTES_MK)
+include $(BUILD_STATIC_LIBRARY)
+endif

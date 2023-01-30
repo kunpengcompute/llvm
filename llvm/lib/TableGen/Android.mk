@@ -1,0 +1,32 @@
+LOCAL_PATH:= $(call my-dir)
+LLVM70_ROOT_PATH := $(LOCAL_PATH)/../..
+include $(LLVM70_ROOT_PATH)/llvm70.mk
+
+libtablegen_SRC_FILES := \
+  DetailedRecordsBackend.cpp \
+  Error.cpp           \
+  JSONBackend.cpp     \
+  Main.cpp            \
+  Record.cpp          \
+  SetTheory.cpp       \
+  StringMatcher.cpp   \
+  TableGenBackend.cpp \
+  TGLexer.cpp         \
+  TGParser.cpp
+
+# For the host
+# =====================================================
+include $(CLEAR_VARS)
+LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
+
+LOCAL_SRC_FILES := $(libtablegen_SRC_FILES)
+LOCAL_MODULE:= libLLVM70TableGen
+
+LOCAL_MODULE_TAGS := optional
+
+REQUIRES_EH := 1
+REQUIRES_RTTI := 1
+
+include $(LLVM70_HOST_BUILD_MK)
+include $(BUILD_HOST_STATIC_LIBRARY)
+

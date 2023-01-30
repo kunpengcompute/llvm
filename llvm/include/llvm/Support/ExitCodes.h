@@ -27,7 +27,8 @@
 // not clash with more standard exit codes like 1.
 #define EX_IOERR 74
 #elif LLVM_ON_UNIX
-#error Exit code EX_IOERR not available
+// #error Exit code EX_IOERR not available
+#define EX_IOERR 74
 #endif
 
 #endif
