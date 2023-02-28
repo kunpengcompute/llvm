@@ -88,7 +88,9 @@ static const char colorcodes[2][2][8][10] = {
 
 // A CMake option controls wheter we emit core dumps by default. An application
 // may disable core dumps by calling Process::PreventCoreFiles().
-static bool coreFilesPrevented = !LLVM_ENABLE_CRASH_DUMPS;
+// static bool coreFilesPrevented = !LLVM_ENABLE_CRASH_DUMPS;
+static bool coreFilesPrevented = false;
+
 
 bool Process::AreCoreFilesPrevented() { return coreFilesPrevented; }
 

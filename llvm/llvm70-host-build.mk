@@ -1,0 +1,105 @@
+ifeq ($(FORCE_BUILD_LLVM70_DEBUG),true)
+local_optflags = -O0 -g
+else
+local_optflags = -O2
+endif
+
+LOCAL_CFLAGS +=	\
+	-D_GNU_SOURCE	\
+	-D__STDC_LIMIT_MACROS	\
+	$(local_optflags)	\
+	-fomit-frame-pointer	\
+	-Wall	\
+	-W	\
+	-Wno-sign-compare \
+	-Wno-unused-parameter	\
+	-Wno-maybe-uninitialized \
+	-Wno-missing-field-initializers \
+	-Wwrite-strings	\
+	-Werror \
+	-Dsprintf=sprintf \
+	$(LOCAL_CFLAGS)
+
+ifeq ($(FORCE_BUILD_LLVM70_DISABLE_NDEBUG),true)
+LOCAL_CFLAGS :=	\
+	$(LOCAL_CFLAGS) \
+	-D_DEBUG	\
+	-UNDEBUG
+endif
+
+ifneq ($(REQUIRES_EH),1)
+LOCAL_CFLAGS += -fno-exceptions
+else
+REQUIRES_EH := 0
+LOCAL_CFLAGS += -fexceptions
+endif
+
+ifneq ($(REQUIRES_RTTI),1)
+LOCAL_CPPFLAGS += -fno-rtti
+else
+REQUIRES_RTTI := 0
+endif
+
+LOCAL_CPPFLAGS :=	\
+	$(LOCAL_CPPFLAGS)	\
+	-Wno-sign-promo         \
+	-std=c++14
+
+LOCAL_CPPFLAGS_linux := \
+	-Woverloaded-virtual
+
+LOCAL_CPPFLAGS_darwin += \
+	-Wno-deprecated-declarations \
+	-Woverloaded-virtual
+
+# Make sure bionic is first so we can include system headers.
+LOCAL_C_INCLUDES :=	\
+	$(LLVM70_ROOT_PATH)	\
+	$(LLVM70_ROOT_PATH)/include	\
+	$(LLVM70_ROOT_PATH)/host/include	\
+	$(LOCAL_C_INCLUDES)
+
+# Add on ncurses to have support for terminfo
+LOCAL_LDLIBS_linux += -lncurses
+LOCAL_LDLIBS_linux += -lgcc_s
+
+LOCAL_IS_HOST_MODULE := true
+
+ifeq ($(HOST_PREFER_32_BIT),true)
+LOCAL_MULTILIB := 32
+else
+ifeq (libLLVM70, $(filter libLLVM70,$(LOCAL_SHARED_LIBRARIES)$(LOCAL_SHARED_LIBRARIES_$(HOST_OS))))
+# Skip building a 32-bit shared object if they are using libLLVM70.
+LOCAL_MULTILIB := first
+endif
+endif
+
+###########################################################
+## Commands for running tblgen to compile a td file
+###########################################################
+define transform70-host-td-to-out
+@mkdir -p $(dir $@)
+@echo "Host TableGen: $(TBLGEN_LOCAL_MODULE) (gen-$(1)) <= $<"
+$(hide) $(LLVM70_TBLGEN) \
+	-I $(dir $<)	\
+	-I $(LLVM70_ROOT_PATH)/include	\
+	-I $(LLVM70_ROOT_PATH)/host/include	\
+	-I $(LLVM70_ROOT_PATH)/lib/Target	\
+	$(if $(strip $(CLANG_ROOT_PATH)),-I $(CLANG_ROOT_PATH)/include,)	\
+	-gen-$(strip $(1))	\
+	-o $@ $<
+endef
+
+define transform70-host-td-to-out2
+@mkdir -p $(dir $@)
+@echo "Host TableGen: $(TBLGEN_LOCAL_MODULE) (gen-$(1)) <= $<"
+$(hide) $(LLVM70_TBLGEN) \
+	-I $(dir $<)	\
+	-I $(LLVM70_ROOT_PATH)/include	\
+	-I $(LLVM70_ROOT_PATH)/host/include	\
+	-I $(LLVM70_ROOT_PATH)/lib/Target  \
+	$(if $(strip $(CLANG_ROOT_PATH)),-I $(CLANG_ROOT_PATH)/include,)	\
+	-gen-$(strip $(1))	\
+	$(strip $(2))	\
+	-o $@ $<
+endef

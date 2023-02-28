@@ -1,0 +1,16 @@
+LOCAL_PATH:= $(call my-dir)
+LLVM70_ROOT_PATH := $(LOCAL_PATH)/../..
+include $(LLVM70_ROOT_PATH)/llvm70.mk
+
+include $(CLEAR_VARS)
+
+LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
+
+LOCAL_STATIC_LIBRARIES := libLLVM70Support
+LOCAL_MODULE := FileCheckLib
+LOCAL_SRC_FILES := FileCheck.cpp
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../include/llvm/FileCheck
+
+LOCAL_MODULE_TAGS := optional
+include $(LLVM70_HOST_BUILD_MK)
+include $(BUILD_HOST_STATIC_LIBRARY)
